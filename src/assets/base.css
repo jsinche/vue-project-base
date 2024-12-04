@@ -1,0 +1,12 @@
+body,button,input,select,textarea {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    color: #6e6b7b;
+    background-color: #f8f8f8;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 700; 
+    color: #333333; 
+}
