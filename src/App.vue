@@ -30,53 +30,55 @@ const logout = () => {
 </script>
 <template>
   <div class="app">
-    <aside
-      class="app__sidebar"
-      :class="{ 'sidebar--expanded': showSidebarDetails }"
-      @mouseenter="handleMouseEnter"
-      @mouseleave="handleMouseLeave"
-    >
+    <aside class="app__sidebar" :class="{ 'sidebar--expanded': showSidebarDetails }" @mouseenter="handleMouseEnter"
+      @mouseleave="handleMouseLeave">
       <div class="sidebar__content">
         <h2 class="sidebar__title">
-          <i class="pi pi-check" style="font-size: 1rem"></i>
-          <span class="sidebar__title-text" v-if="showSidebarDetails">Menú</span>
+          <!-- <i class="pi pi-check sidebar__icon"></i>
+          <span class="sidebar__title-text" v-if="showSidebarDetails">Menú</span> -->
+          <img src="@/assets/logo.svg" alt="Logo" class="sidebar__logo" />
         </h2>
+        <hr class="sidebar__hr" />
         <nav class="sidebar__nav">
           <a href="#" class="sidebar__link">
-            <i class="pi pi-chart-bar" style="font-size: 1rem"></i>
-            <span class="sidebar__link-text" v-if="showSidebarDetails">Inicio</span>
+            <i class="pi pi-chart-bar sidebar__icon"></i>
+            <transition name="fade">
+              <span class="sidebar__link-text" v-if="showSidebarDetails">Inicio</span>
+            </transition>
           </a>
           <a href="#" class="sidebar__link">
-            <i class="pi pi-cog" style="font-size: 1rem"></i>
-            <span class="sidebar__link-text" v-if="showSidebarDetails">Perfil</span>
+            <i class="pi pi-cog sidebar__icon"></i>
+            <transition name="fade">
+              <span class="sidebar__link-text" v-if="showSidebarDetails">Perfil</span>
+            </transition>
           </a>
           <a href="#" class="sidebar__link">
-            <i class="pi pi-discord" style="font-size: 1rem"></i>
-            <span class="sidebar__link-text" v-if="showSidebarDetails">Configuración</span>
+            <i class="pi pi-discord sidebar__icon"></i>
+            <transition name="fade">
+              <span class="sidebar__link-text" v-if="showSidebarDetails">Configuración</span>
+            </transition>
           </a>
         </nav>
-        <button @click="togglePin" class="sidebar__pin-button" :aria-pressed="isPinned">
-          <i class="pi pi-thumbtack" style="font-size: 1rem"></i>
-          <span class="sidebar__pin-text" v-if="showSidebarDetails"
-            >{{ isPinned ? 'Desfijar' : 'Fijar' }} sidebar</span
-          >
-        </button>
+
+        <a @click="togglePin" class="sidebar__pin-button" :aria-pressed="isPinned">
+          <i class="pi pi-thumbtack sidebar__icon"></i>
+          <transition name="fade">
+            <span class="sidebar__pin-text" v-if="showSidebarDetails">
+              {{ isPinned ? 'Desfijar' : 'Fijar' }}
+            </span>
+          </transition>
+        </a>
       </div>
     </aside>
 
     <div class="app__main">
       <header class="app__header header">
-        <div class="header__container">
-          <div class="header__left"></div>
-
-          <div class="header__center">
-            <img src="@/assets/logo.svg" alt="Logo" class="header__logo" />
-          </div>
+        <div class="header__center">
+          <img src="@/assets/logo.svg" alt="Logo" class="header__logo" />
         </div>
-        <div class="header__logo-container"></div>
         <div class="header__right">
           <button @click="logout" class="header__logout-button">
-            <i class="pi pi-sign-out" style="font-size: 1rem"></i>
+            <i class="pi pi-sign-out"></i>
           </button>
         </div>
       </header>
@@ -90,97 +92,20 @@ const logout = () => {
 </template>
 
 <style scoped>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
 .app {
   display: flex;
   height: 100vh;
   background-color: #f3f4f6;
-}
-
-.app__sidebar {
-  width: 60px;
-  background-color: #1f2937;
-  color: white;
-  transition: width 0.3s ease;
-  overflow: hidden;
-}
-
-.app__sidebar.sidebar--expanded {
-  width: 250px;
-}
-
-.sidebar__content {
-  width: 60px;
-  padding: 1rem;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-}
-
-.sidebar__title {
-  font-size: 1.25rem;
-  font-weight: 600;
-  margin-bottom: 1rem;
-  display: flex;
-  align-items: center;
-}
-
-.sidebar__title-text {
-  margin-left: 1rem;
-}
-
-.sidebar__nav {
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-}
-
-.sidebar__link {
-  padding: 0.5rem 1rem;
-  color: #d1d5db;
-  text-decoration: none;
-  border-radius: 0.25rem;
-  transition: background-color 0.3s;
-  display: flex;
-  align-items: center;
-}
-
-.sidebar__link:hover {
-  background-color: #374151;
-}
-
-.sidebar__link-icon {
-  width: 1.25rem;
-  height: 1.25rem;
-}
-
-.sidebar__link-text {
-  margin-left: 1rem;
-}
-
-.sidebar__pin-button {
-  margin-top: auto;
-  background-color: transparent;
-  border: none;
-  color: #d1d5db;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  padding: 0.5rem 0.5rem;
-  transition: background-color 0.3s;
-  border-radius: 0.25rem;
-}
-
-.sidebar__pin-button:hover {
-  background-color: #374151;
-}
-
-.sidebar__pin-icon {
-  width: 1.25rem;
-  height: 1.25rem;
-}
-
-.sidebar__pin-text {
-  margin-left: 1rem;
 }
 
 .app__main {
@@ -193,30 +118,53 @@ const logout = () => {
   display: flex;
   background-color: white;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+  position: relative;
 }
 
-.header__container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0.75rem 1rem;
-  max-width: 1200px;
-  margin: 0 auto;
+.app__sidebar {
+  width: 100px;
+  background-color: #1f2937;
+  color: white;
+  transition: width 0.3s ease;
+  overflow: hidden;
 }
 
-.header__left,
+.app__sidebar.sidebar--expanded {
+  width: 250px;
+}
+
+.app__content {
+  flex: 1;
+  padding: 1rem;
+  overflow: auto;
+}
+
+.app__title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.app__text {
+  line-height: 1.5;
+}
+
 .header__right {
   margin-left: auto;
+  padding: 10px;
 }
 
 .header__center {
   flex: 1;
   display: flex;
   justify-content: center;
+  position: absolute;
+  left: 50%;
+  top: 10px;
 }
 
 .header__logo {
-  height: 40px;
+  height: 80px;
 }
 
 .header__logout-button {
@@ -235,25 +183,82 @@ const logout = () => {
   background-color: #dc2626;
 }
 
-.header__logout-icon {
+.sidebar__content {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.sidebar__title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.sidebar__title-text {
+  margin-left: 1rem;
+}
+
+.sidebar__nav {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  gap: 1rem;
+}
+
+.sidebar__link {
+  padding: 0.8rem;
+  color: #d1d5db;
+  text-decoration: none;
+  border-radius: 0.25rem;
+  transition: background-color 0.3s;
+  display: flex;
+  align-items: center;
+}
+
+.sidebar__link:hover {
+  background-color: #374151;
+}
+
+.sidebar__link-icon {
   width: 1.25rem;
   height: 1.25rem;
-  margin-right: 0.5rem;
+}
+.sidebar__pin-text,
+.sidebar__link-text {
+  margin-left: 1rem;
 }
 
-.app__content {
-  flex: 1;
-  padding: 1rem;
-  overflow: auto;
+.sidebar__pin-button {
+  margin-top: auto;
+  background-color: transparent;
+  border: none;
+  color: #d1d5db;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: 0.8rem;
+  transition: background-color 0.3s;
+  border-radius: 0.25rem;
 }
 
-.app__title {
-  font-size: 1.5rem;
-  font-weight: bold;
-  margin-bottom: 1rem;
+.sidebar__pin-button:hover {
+  background-color: #374151;
 }
 
-.app__text {
-  line-height: 1.5;
+.sidebar__icon {
+  font-size: 2.5rem;
+}
+
+.sidebar__logo {
+  width: 60px;
+}
+
+.sidebar__hr {
+  margin: 0.5rem;
 }
 </style>
