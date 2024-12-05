@@ -12,7 +12,7 @@ const showLoginToast = () => {
 const handleLogin = () => {
   showLoginToast();
   console.log('Iniciando sesión con:', email.value, password.value);
-  router.push('/');
+  router.push('/dashboard');
 };
 </script>
 <template>
@@ -20,7 +20,7 @@ const handleLogin = () => {
     <div class="login-container">
       <div class="login-content">
         <img
-          src="@/assets/aws-svgrepo-com.svg"
+          src="@/assets/bcp.svg"
           alt="Login illustration"
           class="login-content__right-image"
         />
@@ -30,7 +30,7 @@ const handleLogin = () => {
             <p class="login-content__text">Inicia sesión para continuar tu viaje con nosotros.</p>
           </div> -->
           <img
-            src="@/assets/buildings-cityscape-svgrepo-com.svg"
+            src="@/assets/login-image.svg"
             alt="Login illustration"
             class="login-content__image"
           />
@@ -43,44 +43,47 @@ const handleLogin = () => {
         </div>
 
         <div class="login-content__right">
-          <h2 class="login-form__title">Bienvenido a AWS</h2>
-          <p class="login-form__text">Por favor ingrese su correo electrónico y contraseña para continuar.</p>
-          <form @submit.prevent="handleLogin" class="login-form">
-            <div class="login-form__group">
-              <label for="email" class="login-form__label">Correo electrónico</label>
-              <input
-                id="email"
-                v-model="email"
-                type="email"
-                required
-                class="login-form__input"
-              />
-            </div>
-            <div class="login-form__group">
-              <label for="password" class="login-form__label">Contraseña</label>
-              <input
-                id="password"
-                v-model="password"
-                type="password"
-                required
-                class="login-form__input"
-              />
-            </div>
-            <div class="login-form__options">
-              <div class="login-form__checkbox">
-                <input id="remember-me" type="checkbox" class="login-form__checkbox-input" />
-                <label for="remember-me" class="login-form__checkbox-label">Recordarme</label>
+          <div class="login-content__header"></div>
+          <div class="login-content__form">
+            <h2 class="login-form__title">Bienvenido a AWS</h2>
+            <p class="login-form__text">Por favor ingrese su correo electrónico y contraseña para continuar.</p>
+            <form @submit.prevent="handleLogin" class="login-form">
+              <div class="login-form__group">
+                <label for="email" class="login-form__label">Correo electrónico</label>
+                <input
+                  id="email"
+                  v-model="email"
+                  type="email"
+                  required
+                  class="login-form__input"
+                />
               </div>
-              <a href="#" class="login-form__link">¿Olvidaste tu contraseña?</a>
-            </div>
-            <div>
-              <button type="submit" class="login-form__button">Iniciar sesión</button>
-            </div>
-          </form>
-          <p class="login-form__footer">
-            ¿No tienes una cuenta?
-            <a href="#" class="login-form__footer-link">Regístrate</a>
-          </p>
+              <div class="login-form__group">
+                <label for="password" class="login-form__label">Contraseña</label>
+                <input
+                  id="password"
+                  v-model="password"
+                  type="password"
+                  required
+                  class="login-form__input"
+                />
+              </div>
+              <div class="login-form__options">
+                <div class="login-form__checkbox">
+                  <input id="remember-me" type="checkbox" class="login-form__checkbox-input" />
+                  <label for="remember-me" class="login-form__checkbox-label">Recordarme</label>
+                </div>
+                <a href="#" class="login-form__link">¿Olvidaste tu contraseña?</a>
+              </div>
+              <div>
+                <button type="submit" class="login-form__button">Iniciar sesión</button>
+              </div>
+            </form>
+            <p class="login-form__footer">
+              ¿No tienes una cuenta?
+              <a href="#" class="login-form__footer-link">Regístrate</a>
+            </p>
+          </div>
         </div>
       </div>
     </div>
@@ -88,6 +91,19 @@ const handleLogin = () => {
 </template>
 
 <style scoped>
+.login-content__header {
+  background-color: var(--login-background-color);
+  height: 120px;
+  width: 100%;
+  display: none;
+}
+.login-content__form {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  padding: 2rem;
+  flex-grow: 1;
+}
 .login-page {
   display: flex;
   align-items: center;
@@ -111,7 +127,7 @@ const handleLogin = () => {
 }
 
 .login-content__left {
-  background-color: #7ac1ca;
+  background-color: var(--login-background-color);
   color: white;
   flex: 1 1 65%;
   display: flex;
@@ -141,7 +157,6 @@ const handleLogin = () => {
 }
 
 .login-content__right {
-  padding: 2rem;
   flex: 1 1 35%;
   display: flex;
   flex-direction: column;
@@ -245,6 +260,10 @@ const handleLogin = () => {
 }
 
 @media (max-width: 768px) {
+  .login-content__header{
+    display: block;
+  }
+
   .login-content__left {
     display: none;
   }
