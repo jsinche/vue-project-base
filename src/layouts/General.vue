@@ -74,9 +74,6 @@ const logout = () => {
 
     <div class="app__main">
       <header class="app__header header">
-        <div class="header__center">
-          <img src="@/assets/amazon-web-services-logo-svgrepo-com.svg" alt="Logo" class="header__logo" />
-        </div>
         <div class="header__right">
           <button @click="logout" class="header__logout-button">
             <i class="pi pi-sign-out"></i>
@@ -118,13 +115,12 @@ const logout = () => {
   display: flex;
   background-color: white;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
-  height: 80px;
   position: relative;
 }
 
 .app__sidebar {
   width: 100px;
-  background-color: #1460ca;
+  background-color: #7ac1ca;
   color: white;
   transition: width 0.3s ease;
   overflow: hidden;

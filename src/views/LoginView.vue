@@ -2,31 +2,31 @@
   <div class="login-page">
     <div class="login-container">
       <div class="login-content">
+        <img
+          src="@/assets/aws-svgrepo-com.svg"
+          alt="Login illustration"
+          class="login-content__right-image"
+        />
         <div class="login-content__left">
-          <div class="login-content__intro">
+          <!-- <div class="login-content__intro">
             <h2 class="login-content__title">Bienvenido de vuelta</h2>
             <p class="login-content__text">Inicia sesión para continuar tu viaje con nosotros.</p>
-          </div>
+          </div> -->
           <img
-            src="@/assets/dandandan.jpeg"
+            src="@/assets/buildings-cityscape-svgrepo-com.svg"
             alt="Login illustration"
             class="login-content__image"
           />
-          <div class="login-content__quote">
+          <!-- <div class="login-content__quote">
             <p class="login-content__quote-text">
               "El éxito es la suma de pequeños esfuerzos repetidos día tras día."
             </p>
             <p class="login-content__quote-author">- Robert Collier</p>
-          </div>
+          </div> -->
         </div>
 
         <div class="login-content__right">
-          <img
-            src="@/assets/aws-svgrepo-com.svg"
-            alt="Login illustration"
-            class="login-content__right-image"
-          />
-          <h2 class="login-form__title">Bienvenido</h2>
+          <h2 class="login-form__title">Bienvenido a AWS</h2>
           <p class="login-form__text">Por favor ingrese su correo electrónico y contraseña para continuar.</p>
           <form @submit.prevent="handleLogin" class="login-form">
             <div class="login-form__group">
@@ -94,12 +94,13 @@
 }
 
 .login-content__left {
-  background-color: #2563eb;
+  background-color: #7ac1ca;
   color: white;
   flex: 1 1 65%;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
+  align-items: center;
   position: relative;
 }
 
@@ -112,10 +113,7 @@
 }
 
 .login-content__image {
-  border-radius: 8px;
-  margin-bottom: 1rem;
-  width: 100%;
-  position: absolute;
+  width: 400px;
 }
 
 .login-content__quote {
@@ -134,7 +132,11 @@
 }
 
 .login-content__right-image {
-  width: 200px;
+  width: 100px;
+  position: absolute;
+  left: 5%;
+  top: 5%;
+  z-index: 2;
 }
 
 .login-form {
@@ -146,6 +148,7 @@
 .login-form__title {
   font-weight: 600;
   margin-bottom: 1rem;
+  text-align: center;
 }
 
 .login-form__group {
