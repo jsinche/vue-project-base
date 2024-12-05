@@ -1,3 +1,20 @@
+<script setup lang="ts">
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+import { useToast } from 'primevue/usetoast';
+const toast = useToast();
+const email = ref('');
+const password = ref('');
+const router = useRouter();
+const showLoginToast = () => {
+  toast.add({ severity: 'success', summary: 'Buen trabajo', detail: 'Sesión iniciada con éxito', life: 3000 });
+};
+const handleLogin = () => {
+  showLoginToast();
+  console.log('Iniciando sesión con:', email.value, password.value);
+  router.push('/');
+};
+</script>
 <template>
   <div class="login-page">
     <div class="login-container">
@@ -237,16 +254,3 @@
   }
 }
 </style>
-
-<script setup>
-import { ref } from 'vue';
-import { useRouter } from 'vue-router';
-const email = ref('');
-const password = ref('');
-const router = useRouter();
-
-const handleLogin = () => {
-  console.log('Iniciando sesión con:', email.value, password.value);
-  router.push('/');
-};
-</script>

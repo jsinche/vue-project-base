@@ -7,6 +7,7 @@ const isPinned = ref(false)
 const route = useRoute();
 </script>
 <template>
+  <Toast />
   <General v-if="route.meta.general"/>
   <router-view v-else/>
 </template>

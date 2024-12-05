@@ -1,9 +1,41 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router';
+import { useToast } from 'primevue/usetoast';
+import Avatar from 'primevue/avatar';
+import Menu from 'primevue/menu';
+
+const toast = useToast();
+const menu = ref();
+interface MenuItem {
+  label: string;
+  icon: string;
+  command?: () => void;
+}
+const menuItems : MenuItem[] = [
+  {
+    label: 'Perfil',
+    icon: 'pi pi-user'
+  },
+  {
+    label: 'Configuración',
+    icon: 'pi pi-cog'
+  },
+  {
+    label: 'Cerrar sesión',
+    icon: 'pi pi-sign-out',
+    command: () => logout()
+  }
+];
+const showLogoutToast = () => {
+  toast.add({ severity: 'success', summary: 'Buen trabajo', detail: 'Sesión cerrada con éxito', life: 3000 });
+};
 const router = useRouter();
 const isExpanded = ref(false)
 const isPinned = ref(false)
+const toggle = (event : MouseEvent) => {
+  menu.value.toggle(event);
+};
 
 const handleMouseEnter = () => {
   if (!isPinned.value) {
@@ -27,6 +59,7 @@ const togglePin = () => {
 const showSidebarDetails = computed(() => isExpanded.value || isPinned.value)
 
 const logout = () => {
+  showLogoutToast();
   router.push('/login');
   console.log('Cerrando sesión...')
 }
@@ -75,14 +108,20 @@ const logout = () => {
     <div class="app__main">
       <header class="app__header header">
         <div class="header__right">
-          <button @click="logout" class="header__logout-button">
-            <i class="pi pi-sign-out"></i>
-          </button>
+          <div class="user-info" @click="toggle" aria-haspopup="true"
+          aria-controls="overlay_menu">
+            <div class="user-info__details">
+              <span class="user-info__name">Jean Sinche</span>
+              <span class="user-info__rol">Administrador</span>
+            </div>
+            <Avatar image="https://primefaces.org/cdn/primevue/images/avatar/amyelsner.png" class="user-info__icon" size="xlarge" shape="circle" />
+          </div>
+          <Menu id="overlay_menu" ref="menu" popup :model="menuItems" />
         </div>
       </header>
 
       <main class="app__content">
-        <RouterView/>
+        <RouterView />
       </main>
     </div>
   </div>
@@ -255,4 +294,28 @@ const logout = () => {
 .sidebar__hr {
   margin: 0.5rem;
 }
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  cursor: pointer;
+}
+
+.user-info__details {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.user-info__name {
+  font-weight: 600;
+}
+
+.user-info__rol {
+  color: #2557b9;
+  font-weight: 600;
+}
+
 </style>
