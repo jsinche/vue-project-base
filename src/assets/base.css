@@ -138,16 +138,21 @@
     --black-10: rgba(0, 0, 0, .1);
     --black-0: rgba(0, 0, 0, 0);
     --black: #000000;
-    --font-family: 'Montserrat', sans-serif;
     --sidebar-color: #002a8d;
     --login-background-color: #002a8d;
+    --dialog-header-color: #002a8d;
 }
-body,button,input,select,textarea {
-    font-family: var(--font-family);
+body,input,select,textarea {
+    font-family: 'Montserrat', sans-serif;
     font-weight: 500;
     font-size: 14px;
     color: var(--text);
     background-color: #f8f8f8;
+}
+button {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
 }
 
 h1, h2, h3, h4, h5, h6 {
