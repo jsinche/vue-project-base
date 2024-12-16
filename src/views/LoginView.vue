@@ -1,29 +1,56 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-import { useRouter } from 'vue-router';
-import { useToast } from 'primevue/usetoast';
-const toast = useToast();
-const email = ref('');
-const password = ref('');
-const router = useRouter();
+import { ref } from 'vue'
+import { useConfirm } from 'primevue/useconfirm'
+import { useRouter } from 'vue-router'
+import { useToast } from 'primevue/usetoast'
+import Password from 'primevue/password'
+import InputText from 'primevue/inputtext'
+import { useAuthStore } from '@/stores/authStore'
+const authStore = useAuthStore()
+const toast = useToast()
+const email = ref('')
+const password = ref('')
+const router = useRouter()
+const confirm = useConfirm()
 const showLoginToast = () => {
-  toast.add({ severity: 'success', summary: 'Buen trabajo', detail: 'Sesión iniciada con éxito', life: 3000 });
-};
-const handleLogin = () => {
-  showLoginToast();
-  console.log('Iniciando sesión con:', email.value, password.value);
-  router.push('/dashboard');
-};
+  toast.add({
+    severity: 'success',
+    summary: 'Buen trabajo',
+    detail: 'Sesión iniciada con éxito',
+    life: 3000,
+  })
+}
+const confirm1 = () => {
+  confirm.require({
+    message: 'Are you sure you want to proceed?',
+    header: 'Confirmation',
+    icon: 'pi pi-exclamation-triangle',
+    rejectClass: 'p-button-secondary p-button-outlined',
+    rejectLabel: 'Cancel',
+    acceptLabel: 'Save',
+    accept: () => {
+      handleLogin()
+    },
+    reject: () => {
+      toast.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected', life: 3000 })
+    },
+  })
+}
+const handleLogin = async () => {
+  try {
+    await authStore.login(email.value, password.value)
+    showLoginToast()
+    router.push('/dashboard')
+  } catch (error) {
+    console.log(error)
+  }
+}
 </script>
 <template>
   <div class="login-page">
     <div class="login-container">
       <div class="login-content">
-        <img
-          src="@/assets/bcp.svg"
-          alt="Login illustration"
-          class="login-content__right-image"
-        />
+        <img src="@/assets/bcp.svg" alt="Login illustration" class="login-content__right-image" />
         <div class="login-content__left">
           <!-- <div class="login-content__intro">
             <h2 class="login-content__title">Bienvenido de vuelta</h2>
@@ -46,26 +73,21 @@ const handleLogin = () => {
           <div class="login-content__header"></div>
           <div class="login-content__form">
             <h2 class="login-form__title">Bienvenido a AWS</h2>
-            <p class="login-form__text">Por favor ingrese su correo electrónico y contraseña para continuar.</p>
-            <form @submit.prevent="handleLogin" class="login-form">
+            <p class="login-form__text">
+              Por favor ingrese su correo electrónico y contraseña para continuar.
+            </p>
+            <form @submit.prevent="confirm1" class="login-form">
               <div class="login-form__group">
                 <label for="email" class="login-form__label">Correo electrónico</label>
-                <input
-                  id="email"
-                  v-model="email"
-                  type="email"
-                  required
-                  class="login-form__input"
-                />
+                <InputText id="email" v-model="email" />
               </div>
               <div class="login-form__group">
                 <label for="password" class="login-form__label">Contraseña</label>
-                <input
-                  id="password"
+                <Password
                   v-model="password"
-                  type="password"
-                  required
-                  class="login-form__input"
+                  :feedback="false"
+                  toggleMask
+                  :input-style="{ width: '100%' }"
                 />
               </div>
               <div class="login-form__options">
@@ -260,7 +282,7 @@ const handleLogin = () => {
 }
 
 @media (max-width: 768px) {
-  .login-content__header{
+  .login-content__header {
     display: block;
   }
 
